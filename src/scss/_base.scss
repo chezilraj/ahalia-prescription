@@ -1,0 +1,329 @@
+@import 'fonts';
+$primaryFont: 'Roboto-Regular', sans-serif;
+$secondaryFont: 'Poppins-Medium', sans-serif;
+
+*  { 
+    margin: 0; 
+    padding: 0; 
+    border: 0;
+		font-size: 100%;
+		box-sizing: border-box;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body * {
+	font-family: $primaryFont
+}
+body {
+  line-height: 1; 
+	background: grey;
+}
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote {
+  &:before, &:after {
+    content: '';
+    content: none; } }
+
+q {
+  &:before, &:after {
+    content: '';
+    content: none; } }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+input {
+	width: 100%;
+	margin: 0px;
+	padding: 12px;
+	border-radius: 3px;
+	border: solid 1px #cfd8e7;
+	background-color: #ffffff;
+	&::placeholder{
+		opacity: 0.2;
+		font-size: 14px;
+		letter-spacing: 0.56px;
+		color: #000000;
+	}
+}
+textarea{
+	width: 100%;
+	border-radius: 3px;
+  border: solid 1px #cfd8e7;
+	height: 143px;
+	padding: 12px;
+	margin: 0px 0px 16px;
+	&::placeholder{
+		opacity: 0.2;
+		font-size: 14px;
+		letter-spacing: 0.56px;
+		color: #000000;
+	}
+}
+label {
+  margin: 0px 4px 9px 0px;
+  font-size: 16px;
+  letter-spacing: 0.64px;
+  text-align: left;
+  color: #1c2989;
+}
+.form-group{
+	margin-bottom: 27px;
+}
+.input-errors{
+	.error-msg{
+		color: red;
+		font-size: 10px;
+	}
+}
+.custom-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  user-select: none;
+	margin-top: 37px;
+	label {
+		font-size: 14px;
+	}
+	a{
+		font-weight: bold;
+		text-decoration: none;
+		color: #184593;
+	}
+	input{
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+		&:checked  ~ .checkmark {
+			background-color: #184593;
+			&:after {
+				display: block;
+			}
+		}
+	}
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 19px;
+		width: 19px;
+		border: solid 1px #184593;
+		background-color: #ffffff;
+		&:after {
+			content: "";
+			position: absolute;
+			display: none;
+			left: 5px;
+			top: 1px;
+			width: 5px;
+			height: 10px;
+			border: solid white;
+			border-width: 0px 2px 2px 0;
+			transform: rotate(37deg);
+		}
+	}
+
+}
+.custom-radio {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  user-select: none;
+	margin-top: 20px;
+	font-size: 14px;
+	input{
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+		&:checked ~ .checkmark{
+			&:after{
+				display: block;
+			}
+		}
+	}
+	.checkmark {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 18px;
+		width: 18px;
+		background-color: #fff;
+		border: 1px solid #1c2989;
+		border-radius: 50%;
+		&:after{
+			content: "";
+			position: absolute;
+			display: none;
+			top: 2px;
+			left: 2px;
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background:#1c2989;
+		}
+	}
+}
+.button{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: $secondaryFont;
+	width: 100%;
+  height: 53px;
+	font-size: 18px;
+	color: #ffffff;
+  padding: 14px 131px 12px 133px;
+  border-radius: 8px;
+	margin-top: 37px;
+	cursor: pointer;
+	&--blue{
+		background-color: #161a75;
+	}
+	&:disabled{
+		background-color: #cfd8e7
+	}
+}
+h1{
+	margin: 46px 0px 26px 0px;
+	font-family: $primaryFont;
+  font-size: 25px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.32;
+  letter-spacing: 0.25px;
+  text-align: left;
+  color: #161a75;
+}
+.form-group{
+	display: flex;
+  flex-direction: column;
+	&__card{
+		padding: 28px 80px 35px 16px;
+		border-radius: 6px;
+		box-shadow: 0 0 8px 0 rgba(123, 123, 123, 0.25);
+		background-color: #ffffff;
+		margin-bottom: 27px;
+		h4{
+			margin-bottom: 19px;
+			font-size: 16px;
+			font-weight: bold;
+			letter-spacing: 0.64px;
+			color: #1c2989;
+			text-align: left;
+		}
+	}
+}
+.form-mobile{
+	display: flex;
+	input:first-child{
+		width: 60px;
+		margin-right: 10px;
+	}
+}
+.details{
+	background: #0c0054;
+  height: 100%;
+	display: flex;
+	flex-direction: column;
+	border: 0.5px solid #2645ac;
+	&__hero{
+		position: relative;
+		z-index: 2;
+		background: #fff;
+		width: 100%;
+		height: 170px;
+		&::before{
+			content: '';
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			background: #0c0054;
+			border-radius: 0px 0px 50px 0;
+			width: 100%;
+			height: 100%
+		}
+		&--order-placed{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			height: 475px;
+			color: #fff;
+			.order-title{
+				margin: 16px 0 0px;
+				font-size: 30px;
+				font-weight: bold;
+			}
+			.order-id{
+				font-size: 16px;
+			}
+			.order-cancel{
+				font-size: 18px;
+				font-weight: bold;
+				line-height: 1.33;
+				letter-spacing: 0.36px;
+				margin: 41px 15px 0;
+			}
+			a{
+				font-size: 14px;
+				font-weight: 500;
+				letter-spacing: 0.28px;
+				color: #ea4984;
+				text-decoration: none;
+			}
+		}
+	}
+	&__hero_back{
+		display: flex;
+    align-items: center;
+		margin-top: 20px;
+		margin-left: 35px;
+		font-size: 16px;
+		letter-spacing: 1.12px;
+		color: #ffffff;
+		cursor: pointer;
+		.icon-left-arrow{
+			font-size: 12px;
+			margin-right: 8px;
+		}
+	}
+	&__form-container{
+		padding: 0 20px 38px;
+		background: #fff;
+		border-radius: 50px 0px 0px 0;
+		flex: 1;
+		height: 600px;
+		overflow-y: auto;
+	}
+}
+.icon__arrow {
+	&::before{
+		color: #184593;
+	}
+}
+.logo-white {
+  background-color: #fff;
+  mask: url(../assets/ahaliamed-logo.svg) no-repeat center;
+}
+.logo-side{
+	width: 123px;
+	height: 50px;
+	margin-left: auto;
+	margin-right: 30px;
+}
