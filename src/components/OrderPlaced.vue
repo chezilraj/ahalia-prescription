@@ -1,27 +1,41 @@
 <template>
 	<div class="details">
-		<section class="details__hero details__hero--order-placed">
+		<section class="details__hero details__hero--order-placed" v-if="!loading && !failed" >
 			<span class="icon-complete"></span>
 			<h2 class="order-title">Order Placed</h2>
 			<p class="order-id">Order id #123457</p>
 			<p class="order-cancel">Want to Cancel order ?</p>
 			<a href="#">Click Here</a>
 		</section>
+		<section class="details__hero details__hero--order-placed" v-else-if="!loading && failed" >
+			<h2 class="order-title">Order Failed</h2>
+			<p class="order-id">Something Went wrong! Please try after some time.</p>
+		</section>
+		<section class="details__hero details__hero--order-placed details__hero--order-placed--skeleton" v-else>
+			<span/>
+			<h2 class="order-title"/>
+			<p class="order-id" />
+			<p class="order-cancel" />
+			<a href="#" />
+		</section>
+
 		<section class="details__form-container">
-			<h1>Get the App</h1>
-			<h5>DOWNLOAD</h5>
-			<ul class="app-download">
+			<section class="details__form-help">
+				<h4>Need help?</h4>
+				<p>Look into our <a href="#">Customer support</a></p>
+			</section>
+			<!-- <ul class="app-download">
 				<li class="app-download__option">
 						<icon class="icon--download"><img src="../assets/icons/appleplay.svg" alt=""></icon>
 				</li>
 				<li class="app-download__option">
 					<icon class="icon--download"><img src="../assets/icons/playstore.svg" alt=""></icon>
 				</li>
-			</ul>
+			</ul> -->
 		</section>
 		<section class="details__form-help">
-			<h4>Need help?</h4>
-			<p>Look into our <a href="#">Customer support</a></p>
+			<!-- <h4>Need help?</h4>
+			<p>Look into our <a href="#">Customer support</a></p> -->
 		</section>
 	</div>
 </template>
@@ -32,17 +46,19 @@ import { ref, computed, onMounted } from "vue";
 
 export default {
   setup() {
-		const store = useStore
+		const store = useStore();
     const data = ref(null);
     const loading = ref(true);
+    const failed = ref(false);
     const error = ref(null);
-
+		const getOrderDetails = computed(() => store.state.orderDetails)
+		const payload = { order: getOrderDetails.value }
 		function orderPlaced() {
 			loading.value = true;
 			const requestOptions = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(getOrderDetails.value)
+				body: JSON.stringify(payload)
 			};
 			fetch('/api/v1/orders', requestOptions)
 				.then(async response => {
@@ -58,12 +74,11 @@ export default {
 					alert('success')
 				})
 				.catch(error => {
-					this.errorMessage = error;
+					failed.value = true;
+					loading.value = false;
 					console.error('There was an error!', error);
 				});
 		}
-
-		const getOrderDetails = computed(() => state.value.orderDetails)
 
 		onMounted( async() => {
       await orderPlaced();
@@ -74,6 +89,7 @@ export default {
 			onMounted,
       data,
       loading,
+			failed,
       error
     };
   },
@@ -91,6 +107,34 @@ export default {
 .details__hero--order-placed{
 	    height: auto;
 			flex: 1;
+		&--skeleton{
+			span{
+				width: 47px;
+    		height: 47px;
+				border-radius: 50%;
+				background-color: #ddd;
+				animation: pulse-bg 1s infinite;
+			}
+			.order-title{
+				width: 170px;
+    		height: 20px;
+				margin-bottom: 8px;
+				background-color: #ddd;
+				animation: pulse-bg 1s infinite;
+			}
+			.order-id{
+				width: 123px;
+    		height: 15px;
+				background-color: #ddd;
+				animation: pulse-bg 1s infinite;
+			}
+			.order-cancel {
+				width: 120px;
+    		height: 15px;
+				background-color: #ddd;
+				animation: pulse-bg 1s infinite;
+			}
+		}
 }
 .details__form-container{
 	flex: 0.5;
@@ -135,7 +179,7 @@ export default {
 		  font-size: 18px;
 			font-weight: bold;
 			letter-spacing: 0.36px;
-			color: #ffffff;
+			color: #161a75;
 	}
 	a{
 
@@ -148,10 +192,15 @@ export default {
 	p{
 		font-size: 14px;
 		font-weight: normal;
-  	color: #ffffff;
+  	color: #161a75;
 	}
 }
 .icon-complete{
 	font-size: 47px;
+}
+@keyframes pulse-bg {
+	0% { background-color: #ddd; }
+	50% { background-color: #d0d0d0; }
+	100% { background-color: #ddd; }
 }
 </style>

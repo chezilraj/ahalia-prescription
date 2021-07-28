@@ -2,7 +2,7 @@
 	<div class="details">
 		<section class="details__hero">
 			<span class="details__hero_back"
-				><span @click="$emit('next-block', 3)"
+				><span @click="$emit('next-block', 3, 'prev')"
 					><span class="icon-left-arrow"></span> BACK</span
 				>
 				<span class="logo logo-white logo-side"></span
@@ -10,21 +10,6 @@
 		</section>
 		<section class="details__form-container">
 			<h1>Your Address</h1>
-			<div class="form-group">
-				<label>Area *</label>
-				<input
-					type="text"
-					v-model="v$.form.area.$model"
-					placeholder="Bur Dubai"
-				/>
-				<div
-					class="input-errors"
-					v-for="(error, index) of v$.form.area.$errors"
-					:key="index"
-				>
-					<span class="error-msg">{{ error.$message }}</span>
-				</div>
-			</div>
 			<div class="form-group">
 				<label>Building Name / Street *</label>
 				<input
@@ -68,14 +53,28 @@
 				<div class="form-mobile">
 					<input
 						type="text"
-						v-model="form.altphonecode"
+						v-model="v$.form.altphonecode.$model"
 						placeholder="+971"
 					/>
 					<input
 						type="text"
-						v-model="form.altphonenumber"
+						v-model="v$.form.altphonenumber.$model"
 						placeholder="987654321432"
 					/>
+				</div>
+				<div
+					class="input-errors"
+					v-for="(error, index) of v$.form.altphonecode.$errors"
+					:key="index"
+				>
+					<span class="error-msg">{{ error.$message }}</span>
+				</div>
+				<div
+					class="input-errors"
+					v-for="(error, index) of v$.form.altphonenumber.$errors"
+					:key="index"
+				>
+					<span class="error-msg">{{ error.$message }}</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -94,20 +93,15 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import {
-	required
-} from "@vuelidate/validators";
-import { useStore } from "vuex";
+import { required, numeric, minLength } from "@vuelidate/validators";
 
 export default {
 	setup() {
-		const store = useStore;
 		return { v$: useVuelidate() };
 	},
 	data() {
 		return {
 			form: {
-				area: null,
 				street: null,
 				flat: null,
 				deliveryInstructions: null,
@@ -118,25 +112,30 @@ export default {
 	},
 	methods: {
 		nextStep() {
-			//this.$store.commit("SAVE_ADDRESS", this.form);
-			this.$emit("next-block", 4);
+			this.$store.commit("SAVE_ADDRESS", this.form);
+			this.$emit("next-block", 4, 'next');
 		},
 	},
 	validations() {
 		return {
 			form: {
-				area: {
-					required,
-				},
 				street: {
 					required,
 				},
 				flat: {
 					required,
 				},
-			},
-		};
-	},
+				altphonecode: {
+					numeric,
+					min: minLength(3),
+				},
+				altphonenumber: {
+					numeric,
+					min: minLength(7),
+				}
+			}
+		}
+	}
 };
 </script>
 

@@ -1,12 +1,17 @@
 <template>
 	<div class="details">
 		<section class="details__hero">
-			<span class="details__hero_back"><span @click="$emit('next-block', 2)"><span class="icon-left-arrow"></span> BACK </span><span class="logo logo-white logo-side"></span></span>
+			<span class="details__hero_back"><span @click="$emit('next-block', 2, 'prev')"><span class="icon-left-arrow"></span> BACK </span><span class="logo logo-white logo-side"></span></span>
 		</section>
 		<section class="details__form-container">
-					<h1>Select your Emirate</h1>
+					<h1 class="details__form-title">Select your {{ isLocation ? 'Emirate' : 'Area' }} <span v-if="!isLocation" @click="isLocation = true"><span class="icon-left-arrow"></span>locations</span></h1>
 					<ul class="details__select-emirate" v-if="!loading">
-						<li v-for="(location, index) in data" :key="index" @click="selectEmirate(location)"><span>{{ location.attributes.name }}</span> <icon class="icon__arrow icon-right-arrow"></icon></li>
+						<template v-if="isLocation">
+						<li v-for="(location, index) in data" :key="index" @click="selectEmirate(location)"><span>{{ location.attributes.name }}</span> <icon class="icon__arrow icon-right_icon"></icon></li>
+						</template>
+						<template v-else>
+						<li v-for="(area, index) in area" :key="index" @click="selectArea(area.id)"><span>{{ area.name }}</span> <icon class="icon__arrow icon-right_icon"></icon></li>
+						</template>
 					</ul>
 					<div class="details__select-emirate details__select-emirate--skeleton" v-else>
 						<li v-for="n in 7" :key="n"><span></span> <icon class="icon__arrow"></icon></li>
@@ -74,10 +79,21 @@ export default {
       error
     };
   },
+	data(){
+		return {
+				area: null,
+				isLocation: true
+		}
+	},
 	methods: {
 		selectEmirate(location) {
+			this.area = location.attributes.areas
+			this.isLocation = false
 			this.$store.commit('SAVE_LOCATION', location.attributes.name);
-			this.$emit('next-block', 3)
+		},
+		selectArea (id) {
+			this.$emit('next-block', 3, 'next')
+			this.$store.commit('SAVE_AREA_ID', id)
 		}
 	}
 }
@@ -115,7 +131,7 @@ export default {
 		&--skeleton{
 			li{
 				&:hover{
-					background-color: none;
+					background: none;
 				}
 			}
 			span{
@@ -133,6 +149,22 @@ export default {
 				animation: pulse-bg 1s infinite;
 			}
 		}
+	}
+	&__form-title {
+		  display: flex;
+			align-items: center;
+			justify-content: space-between;
+			span{
+				cursor: pointer;
+				font-size: 12px;
+			}
+			.icon-left-arrow{
+				&::before{
+					font-size: 7px;
+					color: #1c2989;
+					margin-right: 4px;
+				}
+			}
 	}
 }
 

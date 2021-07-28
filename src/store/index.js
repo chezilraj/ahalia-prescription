@@ -6,22 +6,21 @@ const store = createStore({
 			name: null,
 			email: null,
 			phone: null,
-			emiratesId: null,
-			agreeTerms: false,
-			selLocation: null,
-			area: null,
-			buildingStreet: null,
-			flatNo: null,
-			deliveryInstructions: null,
-			addContact: null,
-			ePrescriptionNo: null,
-			uploadPriscription: null,
-			uploadClaim: null,
-			insuranceCard: null,
-			frontInsurance: null,
-			backInsurance: null,
-			agreeToConsent: false,
-			paymentOption: null,
+			emirates_id_file_url_front: null,
+			emirates_id_file_url_back: null,
+			prescription_no: null,
+			prescription_file_url: null,
+			claim_form_file_url: null,
+			insurance_type: null,
+			insurance_card_file_url_front: null,
+			insurance_card_file_url_back: null,
+			payment_option: null,
+			address: null,
+			building_no: null,
+			delivery_instructions: null,
+			area_id: null,
+			location: null,
+			alt_phone: null
 		}
 
 	}, 
@@ -31,31 +30,32 @@ const store = createStore({
 		SAVE_DETAILS (state, payload) {
 			state.orderDetails.name = payload.name
 			state.orderDetails.email = payload.email
-			state.orderDetails.phone = payload.phone
-			state.orderDetails.emiratesId = payload.emiratesId
-			state.orderDetails.agreeTerms = payload.agreeTerms
+			state.orderDetails.phone = payload.phonecode + payload.phonenumber
+			state.orderDetails.emirates_id_file_url_front = payload.selectedFileFront
+			state.orderDetails.emirates_id_file_url_back = payload.selectedFileBack
 		},
 		SAVE_LOCATION (state, location) {
-			state.orderDetails.selLocation = location
+			state.orderDetails.location = location
+		},
+		SAVE_AREA_ID (state, payload) {
+			state.orderDetails.area_id = payload
 		},
 		SAVE_ADDRESS (state, payload) {
-			state.orderDetails.area = payload.area
-			state.orderDetails.buildingStreet = payload.buildingStreet
-			state.orderDetails.flatNo = payload.flatNo
-			state.orderDetails.deliveryInstructions = payload.deliveryInstructions
-			state.orderDetails.addContact = payload.addContact
+			state.orderDetails.address = payload.street
+			state.orderDetails.building_no = payload.flat
+			state.orderDetails.delivery_instructions = payload.deliveryInstructions
+			state.orderDetails.alt_phone = payload.altphonecode + payload.altphonenumber
 		},
 		SAVE_PRESCRIPTION (state, payload) {
-			state.orderDetails.ePrescriptionNo = payload.ePrescriptionNo
-			state.orderDetails.uploadPriscription = payload.uploadPriscription
-			state.orderDetails.uploadClaim = payload.uploadClaim
-			state.orderDetails.insuranceCard = payload.insuranceCard
-			state.orderDetails.agreeToConsent = payload.agreeToConsent
-			state.orderDetails.frontInsurance = payload.frontInsurance
-			state.orderDetails.backInsurance = payload.backInsurance
+			state.orderDetails.prescription_no = payload.ePrescriptionNo
+			state.orderDetails.prescription_file_url = payload.selectedFilePrescription
+			state.orderDetails.claim_form_file_url = payload.selectedFileClaim
+			state.orderDetails.insurance_type = payload.insuranceCard
+			state.orderDetails.insurance_card_file_url_front = payload.selectedInsuranceFront
+			state.orderDetails.insurance_card_file_url_back = payload.selectedInsuranceBack
 		},
 		SAVE_PAYMENT (state, payload) {
-			state.orderDetails.paymentOption = payload
+			state.orderDetails.payment_option = payload
 		}
 	}, 
 	actions: {}

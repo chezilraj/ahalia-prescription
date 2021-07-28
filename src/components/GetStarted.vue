@@ -6,13 +6,12 @@
 		<div class="get-started__content">
 			<h1 class="get-started__title">Best Way To Order your Medicine.</h1>
 			<p class="get-started__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-			<button class="get-started__btn" type="button" @click="$emit('next-block', 1)">Get Started <icon class="icon__arrow icon-right-arrow"/></button>
+			<button class="get-started__btn" type="button" @click="$emit('next-block', 1, 'next')">Get Started <icon class="icon__arrow icon-right-arrow"/></button>
 		</div>
 	</div>
 </template>
 
 <script>
-import { defineProps, reactive } from 'vue'
 export default {
 	emits: ['get-started']
 }

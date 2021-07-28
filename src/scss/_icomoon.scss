@@ -25,28 +25,31 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-cash:before {
+.icon-right_icon:before {
   content: "\e900";
 }
-.icon-card:before {
+.icon-cash:before {
   content: "\e901";
 }
-.icon-google .path1:before {
+.icon-card:before {
   content: "\e902";
+}
+.icon-google .path1:before {
+  content: "\e903";
   color: rgb(234, 67, 53);
 }
 .icon-google .path2:before {
-  content: "\e903";
+  content: "\e904";
   margin-left: -1.1689453125em;
   color: rgb(251, 188, 4);
 }
 .icon-google .path3:before {
-  content: "\e904";
+  content: "\e905";
   margin-left: -1.1689453125em;
   color: rgb(52, 168, 83);
 }
 .icon-google .path4:before {
-  content: "\e905";
+  content: "\e932";
   margin-left: -1.1689453125em;
   color: rgb(66, 133, 244);
 }

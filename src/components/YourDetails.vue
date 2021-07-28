@@ -64,16 +64,40 @@
 						<span class="error-msg">{{ error.$message }}</span>
 					</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-group__upload">
 				<label>Upload Emirates ID *</label>
 				<input
-					type="text"
-					v-model="v$.form.emiratesId.$model"
-					placeholder="Enter your Name"
+					type="file"
+					id="emirate-front"
+					@change="onFileChangedFront"
 				/>
+				<label for="emirate-front" class="file-upload">
+					<span class="icon-upload"></span>
+					<span class="upload-item" v-if="form.selectedFileFront">{{ form.selectedFileFront }}</span>
+					<span class="upload-text" v-else>Upload Back Side</span>
+				</label>
 				<div
 					class="input-errors"
-					v-for="(error, index) of v$.form.emiratesId.$errors"
+					v-for="(error, index) of v$.form.selectedFileFront.$errors"
+					:key="index"
+				>
+					<span class="error-msg">{{ error.$message }}</span>
+				</div>
+			</div>
+			<div class="form-group form-group__upload">
+				<input
+					type="file"
+					id="emirate-back"
+					@change="onFileChangedBack"
+				/>
+				<label for="emirate-back" class="file-upload">
+					<span class="icon-upload"></span>
+					<span class="upload-item" v-if="form.selectedFileBack">{{ form.selectedFileBack }}</span>
+					<span class="upload-text" v-else>Upload Back Side</span>
+				</label>
+				<div
+					class="input-errors"
+					v-for="(error, index) of v$.form.selectedFileBack.$errors"
 					:key="index"
 				>
 					<span class="error-msg">{{ error.$message }}</span>
@@ -93,7 +117,7 @@
 					<span class="error-msg">{{ error.$message }}</span>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group form-group__action">
 				<button
 					type="submit"
 					class="button button--blue submit"
@@ -109,12 +133,10 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, email, minLength, requiredUnless } from "@vuelidate/validators";
-import { useStore } from 'vuex'
+import { required, email, minLength, numeric } from "@vuelidate/validators";
 
 export default {
 	setup() {
-		const store = useStore
 		return { v$: useVuelidate() };
 	},
 	data() {
@@ -126,14 +148,22 @@ export default {
 				phonenumber: null,
 				emiratesId: null,
 				terms: false,
-			},
+				selectedFileFront: null,
+				selectedFileBack: null
+			}
 		};
 	},
 	methods: {
 		nextStep() {
 			this.$store.commit('SAVE_DETAILS', this.form);
-			this.$emit('next-block', 2);
+			this.$emit('next-block', 2, 'next');
 		},
+		onFileChangedFront (event) {
+    this.form.selectedFileFront = event.target.files[0].name
+  	},
+		onFileChangedBack (event) {
+    this.form.selectedFileBack = event.target.files[0].name
+  	},
 	},
 	validations() {
 		return {
@@ -147,16 +177,22 @@ export default {
 				},
 				phonecode: {
 					required,
-					min: minLength(4),
+					numeric,
+					min: minLength(3),
 				},
 				phonenumber: {
 					required,
-					min: minLength(6),
+					numeric,
+					min: minLength(7),
 				},
-				emiratesId: {
+				selectedFileFront: {
+					required
+				},
+				selectedFileBack: {
 					required
 				},
 				terms: {
+					checked: value => value === true,
 					required
 				},
 			},
