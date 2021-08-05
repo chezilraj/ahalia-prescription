@@ -60,7 +60,7 @@ export default {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(payload)
 			};
-			fetch('https://benius.herokuapp.com/api/v1/orders', requestOptions)
+			fetch('/api/v1/orders', requestOptions)
 				.then(async response => {
 					const data = await response.json();
 
