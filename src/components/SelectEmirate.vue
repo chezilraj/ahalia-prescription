@@ -35,6 +35,7 @@ export default {
 			loading.value = true;
 			return fetch('https://benius.herokuapp.com/api/v1/locations', {
 				method: 'get',
+				mode: 'no-cors',
 				headers: {
 					'content-type': 'application/json'
 				}

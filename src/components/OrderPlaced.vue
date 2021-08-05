@@ -57,7 +57,8 @@ export default {
 			loading.value = true;
 			const requestOptions = {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: { 'Content-Type': 'application/json'},
+				mode: 'no-cors',
 				body: JSON.stringify(payload)
 			};
 			fetch('https://benius.herokuapp.com/api/v1/orders', requestOptions)
