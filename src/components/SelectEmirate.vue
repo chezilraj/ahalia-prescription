@@ -33,7 +33,7 @@ export default {
 
 		function fetchData() {
 			loading.value = true;
-			return fetch('/api/v1/locations', {
+			return fetch('https://benius.herokuapp.com/api/v1/locations', {
 				method: 'get',
 				headers: {
 					'content-type': 'application/json'
