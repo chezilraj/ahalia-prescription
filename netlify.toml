@@ -7,7 +7,7 @@
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
-	[[redirects]]
+[[redirects]]
   from = "/uploads"
   to = "https://benius-admin.s3.ap-south-1.amazonaws.com"
   status = 200
