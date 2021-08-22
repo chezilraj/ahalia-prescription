@@ -20,7 +20,7 @@ const store = createStore({
 			delivery_instructions: null,
 			area_id: null,
 			location: null,
-			alt_phone: null
+			alternate_phone: null
 		}
 
 	}, 
@@ -44,7 +44,7 @@ const store = createStore({
 			state.orderDetails.address = payload.street
 			state.orderDetails.building_no = payload.flat
 			state.orderDetails.delivery_instructions = payload.deliveryInstructions
-			state.orderDetails.alt_phone = payload.altphonecode + payload.altphonenumber
+			state.orderDetails.alternate_phone = payload.altphonecode + payload.altphonenumber
 		},
 		SAVE_PRESCRIPTION (state, payload) {
 			state.orderDetails.prescription_no = payload.ePrescriptionNo

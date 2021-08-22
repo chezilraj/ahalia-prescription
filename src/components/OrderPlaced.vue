@@ -3,7 +3,7 @@
 		<section class="details__hero details__hero--order-placed" v-if="!loading && !failed" >
 			<span class="icon-complete"></span>
 			<h2 class="order-title">Order Placed</h2>
-			<p class="order-id">Order id #123457</p>
+			<p class="order-id">Order id #{{orderId}}</p>
 			<p class="order-cancel">Want to Cancel order ?</p>
 			<a href="#">Click Here</a>
 		</section>
@@ -51,6 +51,7 @@ export default {
     const loading = ref(true);
     const failed = ref(false);
     const error = ref(null);
+    const orderId = ref(null);
 		const getOrderDetails = computed(() => store.state.orderDetails)
 		const payload = { order: getOrderDetails.value }
 		function orderPlaced() {
@@ -58,10 +59,9 @@ export default {
 			const requestOptions = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json'},
-				mode: 'no-cors',
 				body: JSON.stringify(payload)
 			};
-			fetch('https://benius.herokuapp.com/api/v1/orders', requestOptions)
+			fetch('/api/v1/orders', requestOptions)
 				.then(async response => {
 					const data = await response.json();
 
@@ -71,8 +71,8 @@ export default {
 						const error = (data && data.message) || response.status;
 						return Promise.reject(error);
 					}
+					orderId.value = data.data.id
 					loading.value = false;
-					alert('success')
 				})
 				.catch(error => {
 					failed.value = true;
@@ -91,6 +91,7 @@ export default {
       data,
       loading,
 			failed,
+			orderId,
       error
     };
   },

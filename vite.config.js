@@ -10,6 +10,11 @@ export default defineConfig({
       '/api': {
         target: 'https://benius.herokuapp.com',
         changeOrigin: true
+      },
+      // // Using the proxy instance
+      '/uploads': {
+        target: 'https://benius-admin.s3.ap-south-1.amazonaws.com',
+        changeOrigin: true
       }
 
     },

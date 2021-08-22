@@ -69,11 +69,11 @@
 				<input
 					type="file"
 					id="emirate-front"
-					@change="onFileChangedFront"
+					@change="onFileChanged('front', $event.target.files)"
 				/>
 				<label for="emirate-front" class="file-upload">
 					<span class="icon-upload"></span>
-					<span class="upload-item" v-if="form.selectedFileFront">{{ form.selectedFileFront }}</span>
+					<span class="upload-item" v-if="form.selectedFileFront">{{ splitFileFront }}</span>
 					<span class="upload-text" v-else>Upload Back Side</span>
 				</label>
 				<div
@@ -88,11 +88,11 @@
 				<input
 					type="file"
 					id="emirate-back"
-					@change="onFileChangedBack"
+					@change="onFileChanged('back', $event.target.files)"
 				/>
 				<label for="emirate-back" class="file-upload">
 					<span class="icon-upload"></span>
-					<span class="upload-item" v-if="form.selectedFileBack">{{ form.selectedFileBack }}</span>
+					<span class="upload-item" v-if="form.selectedFileBack">{{ splitFileBack }}</span>
 					<span class="upload-text" v-else>Upload Back Side</span>
 				</label>
 				<div
@@ -149,8 +149,11 @@ export default {
 				emiratesId: null,
 				terms: false,
 				selectedFileFront: null,
-				selectedFileBack: null
-			}
+				selectedFileBack: null,
+			},
+			splitFileFront: null,
+			splitFileBack: null,
+			signedUrl: null
 		};
 	},
 	methods: {
@@ -158,12 +161,58 @@ export default {
 			this.$store.commit('SAVE_DETAILS', this.form);
 			this.$emit('next-block', 2, 'next');
 		},
-		onFileChangedFront (event) {
-    this.form.selectedFileFront = event.target.files[0].name
+		onFileChanged (fieldName, files) {
+			let file = files[0]
+			this.getSignedUrl(fieldName, file, file.type)
   	},
-		onFileChangedBack (event) {
-    this.form.selectedFileBack = event.target.files[0].name
-  	},
+		async getSignedUrl (fieldName, file, ContentType) {
+			return await fetch('/api/v1/imports/signed_url?filename='+file.name+'&content_type='+ContentType, {
+				method: 'get',
+				mode: 'no-cors',
+				headers: {
+					'content-type': 'application/json'
+				}
+			})
+			.then(res => {
+				// a non-200 response code
+				if (!res.ok) {
+					// create error instance with HTTP status text
+					const error = new Error(res.statusText);
+					error.json = res.json();
+					throw error;
+				}
+
+				return res.json();
+			})
+			.then(json => {
+				// set the response data
+				this.signedUrl = json.data;
+				if(fieldName === 'front'){
+					this.form.selectedFileFront = this.signedUrl.key
+					this.splitFileFront = this.signedUrl.key.split('/')[1]
+					let signedUrl = this.signedUrl.signed_url.split('.com')[1]
+					fetch(signedUrl, {
+						method: 'PUT',
+						body: file
+					})
+					.then(json => {
+						let t = json.data;
+					})
+				}
+				if(fieldName === 'back'){
+					this.form.selectedFileBack = this.signedUrl.key
+					this.splitFileBack = this.signedUrl.key.split('/')[1]
+					let signedUrl = this.signedUrl.signed_url.split('.com')[1]
+					fetch(signedUrl, {
+						method: 'PUT',
+						body: file
+					})
+					.then(json => {
+						let t = json.data;
+					})
+				}
+			})
+		}
 	},
 	validations() {
 		return {
