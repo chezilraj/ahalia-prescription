@@ -53,21 +53,15 @@
 				<div class="form-mobile">
 					<input
 						type="text"
-						v-model="v$.form.altphonecode.$model"
 						placeholder="+971"
+						value="+971"
+						disabled
 					/>
 					<input
 						type="text"
 						v-model="v$.form.altphonenumber.$model"
-						placeholder="987654321432"
+						placeholder="500000000"
 					/>
-				</div>
-				<div
-					class="input-errors"
-					v-for="(error, index) of v$.form.altphonecode.$errors"
-					:key="index"
-				>
-					<span class="error-msg">{{ error.$message }}</span>
 				</div>
 				<div
 					class="input-errors"
@@ -93,7 +87,7 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, numeric, minLength } from "@vuelidate/validators";
+import { required, helpers, numeric, minLength } from "@vuelidate/validators";
 
 export default {
 	setup() {
@@ -105,7 +99,6 @@ export default {
 				street: null,
 				flat: null,
 				deliveryInstructions: null,
-				altphonecode: null,
 				altphonenumber: null,
 			},
 		};
@@ -120,18 +113,14 @@ export default {
 		return {
 			form: {
 				street: {
-					required,
+					required: helpers.withMessage('Street Name is required', required)
 				},
 				flat: {
 					required,
 				},
-				altphonecode: {
-					numeric,
-					min: minLength(3),
-				},
 				altphonenumber: {
 					numeric,
-					min: minLength(7),
+					min: minLength(9),
 				}
 			}
 		}

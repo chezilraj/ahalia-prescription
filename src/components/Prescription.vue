@@ -6,7 +6,7 @@
 		<section class="details__form-container">
 					<h1>Prescription & Insurance</h1>
 					<div class="form-group">
-						<label>E - Prescription number ( Optional )</label>
+						<label>E - Prescription number (Optional)</label>
 						<input type="text" v-model="form.ePrescriptionNo" placeholder="E - Prescription number" />
 					</div>
 					<div class="form-group form-group__upload">
@@ -19,7 +19,7 @@
 						</label>
 					</div>
 					<div class="form-group form-group__upload">
-						<label>Upload Claim Form ( If Available )</label>
+						<label>Upload Claim Form (If Available)</label>
 						<input type="file" id="claimform" @change="onFileChanged('claim', $event.target.files)" />
 						<label for="claimform" class="file-upload">
 							<span class="icon-upload"></span>
@@ -31,38 +31,40 @@
 						<div class="form-group__card">
 								<h4>Insurance Card</h4>
 								<label class="custom-radio">I don’t have insurance
-									<input type="radio" value="no_insurance" v-model="form.insuranceCard" checked="checked" name="insurance-card">
+									<input type="radio" value="no_insurance" @change="enableUpload('no_insurance')" v-model="form.insuranceCard" checked="checked" name="insurance-card">
 									<span class="checkmark"></span>
 								</label>
 								<label class="custom-radio">Emirates ID is insurance card
-									<input type="radio" value="emirates_card" v-model="form.insuranceCard" name="insurance-card">
+									<input type="radio" value="emirates_id" @change="enableUpload('emirates_id')" v-model="form.insuranceCard" name="insurance-card">
 									<span class="checkmark"></span>
 								</label>
 								<label class="custom-radio">I have separate insurance card
-									<input type="radio" value="separate_card" v-model="form.insuranceCard" name="insurance-card">
+									<input type="radio" value="separate_card" @change="enableUpload('separate_card')" v-model="form.insuranceCard" name="insurance-card">
 									<span class="checkmark"></span>
 								</label>
 						</div>
 					</div>
-					<div class="form-group form-group__upload">
-						<label>Upload Insurance Front *</label>
-						<input type="file" id="insuranceFront" 	@change="onFileChanged('insurance-front', $event.target.files)" placeholder="Upload Front" />
-												<label for="insuranceFront" class="file-upload">
-							<span class="icon-upload"></span>
-							<span class="upload-item" v-if="form.selectedInsuranceFront">{{ splitFileInsuranceFront }}</span>
-							<span class="upload-text" v-else>Upload Prescription</span>
-						</label>
-					</div>
-					<div class="form-group form-group__upload">
-						<label>Upload Insurance Back *</label>
-						<input type="file" id="insuranceBack" @change="onFileChanged('insurance-back', $event.target.files)" placeholder="Upload Back" />
-												<label for="insuranceBack" class="file-upload">
-							<span class="icon-upload"></span>
-							<span class="upload-item" v-if="form.selectedInsuranceBack">{{ splitFileInsuranceBack }}</span>
-							<span class="upload-text" v-else>Upload Prescription</span>
-						</label>
+					<template v-if="isUploadInsurance">
+						<div class="form-group form-group__upload">
+							<label>Upload Insurance Front *</label>
+							<input type="file" id="insuranceFront" 	@change="onFileChanged('insurance-front', $event.target.files)" placeholder="Upload Front" />
+													<label for="insuranceFront" class="file-upload">
+								<span class="icon-upload"></span>
+								<span class="upload-item" v-if="form.selectedInsuranceFront">{{ splitFileInsuranceFront }}</span>
+								<span class="upload-text" v-else>Upload Prescription</span>
+							</label>
+						</div>
+						<div class="form-group form-group__upload">
+							<label>Upload Insurance Back *</label>
+							<input type="file" id="insuranceBack" @change="onFileChanged('insurance-back', $event.target.files)" placeholder="Upload Back" />
+													<label for="insuranceBack" class="file-upload">
+								<span class="icon-upload"></span>
+								<span class="upload-item" v-if="form.selectedInsuranceBack">{{ splitFileInsuranceBack }}</span>
+								<span class="upload-text" v-else>Upload Prescription</span>
+							</label>
 
-					</div>
+						</div>
+					</template>
 					<div class="form-group">
 						<label class="custom-checkbox">I agree to the <a href="#">Consent Form</a>
 							<input type="checkbox" v-model="v$.form.agreeToConsent.$model">
@@ -106,6 +108,7 @@ export default {
 			splitFileClaim: null,
 			splitFileInsuranceFront: null,
 			splitFileInsuranceBack: null,
+			isUploadInsurance: false
 		};
 	},
 	methods: {
@@ -188,25 +191,25 @@ export default {
 					})
 				}
 			})
+		},
+		enableUpload(val){
+			if(val === 'separate_card'){
+				this.isUploadInsurance = true
+			}else{
+				this.isUploadInsurance = false
+			}
 		}
 	},
+	computed: {
+    rules () {
+      return this.isUploadInsurance === true
+        ? { selectedInsuranceFront: { required }, selectedInsuranceBack: { required }, selectedFilePrescription: { required }, agreeToConsent: { required, checked: value => value === true }} 
+        : { selectedFilePrescription: { required }, agreeToConsent: { required, checked: value => value === true }  }
+    }
+  },
 	validations() {
 		return {
-			form: {
-				selectedFilePrescription: {
-					required
-				},
-				selectedInsuranceFront: {
-					required
-				},
-				selectedInsuranceBack: {
-					required
-				},
-				agreeToConsent: {
-					required,
-					checked: value => value === true
-				}
-			},
+			form: this.rules
 		};
 	},
 };

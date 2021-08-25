@@ -10,17 +10,9 @@
 					<icon class="icon-cash"></icon>
 					<span>Cash on Delivery</span><span class="icon__arrow icon-right_icon" />
 				</li>
-				<li class="payment__option" @click="nextStep('apple_pay')">
-					<icon class="icon-appleplay"><img src="../assets/icons/apple.svg" alt=""></icon>
-					<span>Pay with Apple Pay</span><span class="icon__arrow icon-right_icon" />
-				</li>
-				<li class="payment__option" @click="nextStep('google_pay')">
-					<icon class="icon-google"><img src="../assets/icons/google.svg" alt=""></icon>
-					<span>Pay with Google Pay</span><span class="icon__arrow icon-right_icon" />
-				</li>
 				<li class="payment__option" @click="nextStep('pay_with_card')">
 					<icon class="icon-card"></icon>
-					<span>Pay with Card</span><span class="icon__arrow icon-right_icon" />
+					<span>Card on Delivery</span><span class="icon__arrow icon-right_icon" />
 				</li>
 			</ul>
 		</section>

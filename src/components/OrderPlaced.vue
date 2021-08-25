@@ -3,39 +3,27 @@
 		<section class="details__hero details__hero--order-placed" v-if="!loading && !failed" >
 			<span class="icon-complete"></span>
 			<h2 class="order-title">Order Placed</h2>
-			<p class="order-id">Order id #{{orderId}}</p>
-			<p class="order-cancel">Want to Cancel order ?</p>
-			<a href="#">Click Here</a>
+			<p class="order-desc">We have received your order and will contact you soon. <strong>Kindly note the order ID</strong></p>
+			<h2 class="order-id">Order ID: {{orderId}}</h2>
 		</section>
 		<section class="details__hero details__hero--order-placed" v-else-if="!loading && failed" >
 			<h2 class="order-title">Order Failed</h2>
-			<p class="order-id">Something Went wrong! Please try after some time.</p>
+			<p class="order-desc order-desc--try">Something Went wrong! Please try after some time.</p>
 		</section>
 		<section class="details__hero details__hero--order-placed details__hero--order-placed--skeleton" v-else>
 			<span/>
 			<h2 class="order-title"/>
-			<p class="order-id" />
+			<p class="order-desc" />
 			<p class="order-cancel" />
 			<a href="#" />
 		</section>
 
 		<section class="details__form-container">
-			<section class="details__form-help">
-				<h4>Need help?</h4>
-				<p>Look into our <a href="#">Customer support</a></p>
-			</section>
-			<!-- <ul class="app-download">
-				<li class="app-download__option">
-						<icon class="icon--download"><img src="../assets/icons/appleplay.svg" alt=""></icon>
-				</li>
-				<li class="app-download__option">
-					<icon class="icon--download"><img src="../assets/icons/playstore.svg" alt=""></icon>
-				</li>
-			</ul> -->
+			<a href="#" class="button button--blue button--continue"><span>Continue Shopping</span> <icon class="icon__arrow icon-right_icon" /></a>
 		</section>
 		<section class="details__form-help">
-			<!-- <h4>Need help?</h4>
-			<p>Look into our <a href="#">Customer support</a></p> -->
+			<h4>Need help?</h4>
+			<p>Call Us on <a href="tel:+9710500000000">0500000000</a></p>
 		</section>
 	</div>
 </template>
@@ -109,6 +97,23 @@ export default {
 .details__hero--order-placed{
 	    height: auto;
 			flex: 1;
+		.order-desc{
+			text-align: center;
+			font-size: 14px;
+			padding: 0 68px;
+			line-height: 1.2;
+			color: #fffc;
+			strong{
+				color: #fff;
+			}
+			&--try{
+				padding: 0 50px;
+			}
+		}
+		.order-id{
+			font-size: 20px;
+			padding-top: 26px;
+		}
 		&--skeleton{
 			span{
 				width: 47px;
@@ -124,7 +129,7 @@ export default {
 				background-color: #ddd;
 				animation: pulse-bg 1s infinite;
 			}
-			.order-id{
+			.order-desc{
 				width: 123px;
     		height: 15px;
 				background-color: #ddd;
@@ -140,6 +145,9 @@ export default {
 }
 .details__form-container{
 	flex: 0.5;
+	padding: 0 20px 0px;
+	display: flex;
+  align-items: center;
 	h1{
 		font-size: 30px;
 		  color: #161a75;
@@ -181,7 +189,7 @@ export default {
 		  font-size: 18px;
 			font-weight: bold;
 			letter-spacing: 0.36px;
-			color: #161a75;
+			color: #fff;
 	}
 	a{
 
@@ -194,7 +202,19 @@ export default {
 	p{
 		font-size: 14px;
 		font-weight: normal;
-  	color: #161a75;
+  	color: #fff;
+	}
+}
+.button--continue{
+	text-decoration: none;
+	span{
+		margin-left: auto;
+	}
+	.icon__arrow{
+		margin-left: auto;
+		&::before {
+			color: #fff;
+		}
 	}
 }
 .icon-complete{

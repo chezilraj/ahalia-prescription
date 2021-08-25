@@ -40,22 +40,16 @@
 				<div class="form-mobile">
 					<input
 						type="text"
-						v-model="v$.form.phonecode.$model"
 						placeholder="+971"
+						value="+971"
+						disabled
 					/>
 					<input
 						type="text"
 						v-model="v$.form.phonenumber.$model"
-						placeholder="987654321432"
+						placeholder="500000000"
 					/>
 				</div>
-					<div
-						class="input-errors"
-						v-for="(error, index) of v$.form.phonecode.$errors"
-						:key="index"
-					>
-						<span class="error-msg">{{ error.$message }}</span>
-					</div>
 					<div
 						class="input-errors"
 						v-for="(error, index) of v$.form.phonenumber.$errors"
@@ -65,7 +59,7 @@
 					</div>
 			</div>
 			<div class="form-group form-group__upload">
-				<label>Upload Emirates ID *</label>
+				<label>Upload Emirates ID (Front) *</label>
 				<input
 					type="file"
 					id="emirate-front"
@@ -74,30 +68,11 @@
 				<label for="emirate-front" class="file-upload">
 					<span class="icon-upload"></span>
 					<span class="upload-item" v-if="form.selectedFileFront">{{ splitFileFront }}</span>
-					<span class="upload-text" v-else>Upload Back Side</span>
+					<span class="upload-text" v-else>Front</span>
 				</label>
 				<div
 					class="input-errors"
 					v-for="(error, index) of v$.form.selectedFileFront.$errors"
-					:key="index"
-				>
-					<span class="error-msg">{{ error.$message }}</span>
-				</div>
-			</div>
-			<div class="form-group form-group__upload">
-				<input
-					type="file"
-					id="emirate-back"
-					@change="onFileChanged('back', $event.target.files)"
-				/>
-				<label for="emirate-back" class="file-upload">
-					<span class="icon-upload"></span>
-					<span class="upload-item" v-if="form.selectedFileBack">{{ splitFileBack }}</span>
-					<span class="upload-text" v-else>Upload Back Side</span>
-				</label>
-				<div
-					class="input-errors"
-					v-for="(error, index) of v$.form.selectedFileBack.$errors"
 					:key="index"
 				>
 					<span class="error-msg">{{ error.$message }}</span>
@@ -133,7 +108,7 @@
 
 <script>
 import useVuelidate from "@vuelidate/core";
-import { required, email, minLength, numeric } from "@vuelidate/validators";
+import { required, helpers, email, minLength, numeric } from "@vuelidate/validators";
 
 export default {
 	setup() {
@@ -144,15 +119,12 @@ export default {
 			form: {
 				email: null,
 				email: null,
-				phonecode: null,
 				phonenumber: null,
 				emiratesId: null,
 				terms: false,
-				selectedFileFront: null,
-				selectedFileBack: null,
+				selectedFileFront: null
 			},
 			splitFileFront: null,
-			splitFileBack: null,
 			signedUrl: null
 		};
 	},
@@ -199,18 +171,6 @@ export default {
 						let t = json.data;
 					})
 				}
-				if(fieldName === 'back'){
-					this.form.selectedFileBack = this.signedUrl.key
-					this.splitFileBack = this.signedUrl.key.split('/')[1]
-					let signedUrl = this.signedUrl.signed_url.split('.com')[1]
-					fetch(signedUrl, {
-						method: 'PUT',
-						body: file
-					})
-					.then(json => {
-						let t = json.data;
-					})
-				}
 			})
 		}
 	},
@@ -218,26 +178,18 @@ export default {
 		return {
 			form: {
 				name: {
-					required,
+					required: helpers.withMessage('Name is required', required)
 				},
 				email: {
-					required,
-					email,
-				},
-				phonecode: {
-					required,
-					numeric,
-					min: minLength(3),
+					required: helpers.withMessage('Email Address is required', required),
+					email: helpers.withMessage('Enter a valid Email Address', email),
 				},
 				phonenumber: {
 					required,
 					numeric,
-					min: minLength(7),
+					min: minLength(9)
 				},
 				selectedFileFront: {
-					required
-				},
-				selectedFileBack: {
 					required
 				},
 				terms: {
