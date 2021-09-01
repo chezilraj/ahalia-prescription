@@ -9,12 +9,14 @@ export default defineConfig({
       // // Using the proxy instance
       '/api': {
         target: 'https://benius.herokuapp.com',
-        changeOrigin: true
+        changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, '')
       },
       // // Using the proxy instance
       '/uploads': {
         target: 'https://benius-admin.s3.ap-south-1.amazonaws.com',
-        changeOrigin: true
+        changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/uploads/, '')
       }
 
     },
