@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node ./config/copy-to-dist.js",
     "serve": "vite preview",
 		"start": "node server.js"
   },
