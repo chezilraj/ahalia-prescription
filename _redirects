@@ -1,1 +1,2 @@
+/api /post
 /api/*  https://benius.herokuapp.com/api/:splat  200
