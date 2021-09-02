@@ -9,3 +9,5 @@
   to = "https://benius-admin.s3.ap-south-1.amazonaws.com/:splat"
   status = 200
   force = true
+
+/*    /index.html   301
