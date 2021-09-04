@@ -10,6 +10,26 @@
 }
 
 @font-face {
+  font-family: 'Montserrat-Regular';
+  src: url('../src/assets/fonts/montserrat/Montserrat-Regular.eot');
+  src: url('../src/assets/fonts/montserrat/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../src/assets/fonts/montserrat/Montserrat-Regular.woff') format('woff'),
+       url('../src/assets/fonts/montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url('../src/assets/fonts/montserrat/Montserrat-Bold.eot');
+  src: url('../src/assets/fonts/montserrat/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../src/assets/fonts/montserrat/Montserrat-Bold.woff') format('woff'),
+       url('../src/assets/fonts/montserrat/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: bold;
+}
+
+@font-face {
   font-family: 'Poppins-Medium';
   src: url('../src/assets/fonts/poppins/Poppins-Medium.eot');
   src: url('../src/assets/fonts/poppins/Poppins-Medium.eot?#iefix') format('embedded-opentype'),

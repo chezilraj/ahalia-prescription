@@ -1,10 +1,10 @@
 <template>
 	<div class="get-started">
 		<div class="get-started__hero">
-			<img class="logo" src="../assets/ahaliamed-logo.svg" alt="">
+			<img class="logo" src="../assets/ahaliamed-logo-white.svg" alt="ahaliamed">
 		</div>
 		<div class="get-started__content">
-			<h1 class="get-started__title">Best Way To Order your Medicine.</h1>
+			<h1 class="get-started__title">Best Way To Order Your Medicine.</h1>
 			<p class="get-started__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
 			<button class="get-started__btn" type="button" @click="$emit('next-block', 1, 'next')">Get Started <icon class="icon__arrow icon-right-arrow"/></button>
 		</div>
@@ -25,7 +25,7 @@ export default {
 	flex-direction: column;
 	&__hero{
 		position: relative;
-		background: url('../assets/hero-image.png') no-repeat;
+		background: url('../assets/hero-image.webp') no-repeat;
 		background-size: cover;
 		background-position: center;
     height: 100%;
@@ -45,7 +45,7 @@ export default {
 		border-bottom-right-radius: 80px;
 		}
 		.logo{
-			width: 280px;
+			width: 272px;
 			position: relative;
     	z-index: 1;
 		}
@@ -54,7 +54,7 @@ export default {
 		padding: 62px 30px 55px 43px;
 	}
 	&__title{
-		font-family: $primaryFont;
+		font-family: $secondaryFont;
 		margin: 0 36px 13px 0;
 		font-size: 48px;
 		font-weight: bold;
