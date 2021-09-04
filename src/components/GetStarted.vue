@@ -5,7 +5,7 @@
 		</div>
 		<div class="get-started__content">
 			<h1 class="get-started__title">Best Way To Order Your Medicine.</h1>
-			<p class="get-started__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+			<p class="get-started__desc">Upload your Prescription and get your medicine delivered to your home.</p>
 			<button class="get-started__btn" type="button" @click="$emit('next-block', 1, 'next')">Get Started <icon class="icon__arrow icon-right-arrow"/></button>
 		</div>
 	</div>
