@@ -4,7 +4,7 @@
 			<span class="logo logo-white"></span>
 		</section>
 		<section class="details__form-container">
-			<h1>Add Deatils Here</h1>
+			<h1>Add Details Here</h1>
 			<div class="form-group">
 				<label>Name *</label>
 				<input
